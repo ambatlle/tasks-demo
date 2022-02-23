@@ -11,3 +11,11 @@ Health Check
 ---
 
 To see your applications health enter url `http://localhost:8081/healthcheck`
+
+
+##Development
+###Test app
+
+./mvnw clean package
+java -jar target/tasks-api-1.0-SNAPSHOT.jar server
+curl http://localhost:8080/hello
