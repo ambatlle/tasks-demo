@@ -1,6 +1,6 @@
 package cat.ambatlle.tasks.resources;
 
-import cat.ambatlle.tasks.core.Greeting;
+import cat.ambatlle.tasks.api.Greeting;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;

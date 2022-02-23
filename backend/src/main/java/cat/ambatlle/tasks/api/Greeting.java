@@ -1,4 +1,4 @@
-package cat.ambatlle.tasks.core;
+package cat.ambatlle.tasks.api;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

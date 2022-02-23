@@ -23,7 +23,7 @@ class TasksService {
     let newTask = { ...task };
 
     let postResponse = await TasksService.instance
-      .sendData("http://localhost:8002/tasks", newTask)
+      .sendData("http://localhost:8080/tasks", newTask)
       .then((data) => {
         return data;
       });
@@ -32,8 +32,9 @@ class TasksService {
   }
 
   getTasks() {
-    return fetch("http://localhost:8002/tasks", {
+    return fetch("http://localhost:8080/tasks", {
       mode: "cors",
+      method: "GET",
       headers: {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
@@ -43,7 +44,7 @@ class TasksService {
 
   async toggleDone({ id, done }) {
     let patchResponse = await TasksService.instance
-      .sendData(`http://localhost:8002/tasks/${id}`, {done}, "PATCH")
+      .sendData(`http://localhost:8080/tasks/${id}`, {done}, "PATCH")
       .then((data) => {
         return data;
       });
