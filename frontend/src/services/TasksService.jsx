@@ -1,10 +1,12 @@
 //todo: error management
 //todo: ENV parameter for api host
 class TasksService {
+  static apiUrl = "http://localhost:8080/tasks";
   static instance = TasksService.instance || new TasksService();
 
-  async sendData(url = "", data = {}, method = "POST") {
+  async sendBodyData(url = "", data = {}, method = "POST") {
     const response = await fetch(url, {
+      timeout: 2500,
       method: method,
       mode: "cors",
       cache: "no-cache",
@@ -19,11 +21,38 @@ class TasksService {
     return response.json();
   }
 
+  async sendUrlData(url = "", method = "GET") {
+    const response = await fetch(url, {
+      timeout: 2500,
+      method: method,
+      mode: "cors",
+      cache: "no-cache",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      redirect: "follow",
+      referrerPolicy: "no-referrer",
+    })
+      .then((response) => TasksService.instance.handleErrors(response))
+      .catch((err) => {
+        return Promise.reject(err);
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          return res.json();
+        } else {
+          return {};
+        }
+      });
+    return response;
+  }
+
   async addNewTask(task) {
     let newTask = { ...task };
 
     let postResponse = await TasksService.instance
-      .sendData("http://localhost:8080/tasks", newTask)
+      .sendBodyData(TasksService.apiUrl, newTask)
       .then((data) => {
         return data;
       });
@@ -33,38 +62,33 @@ class TasksService {
 
   handleErrors(response) {
     if (!response.ok) {
-      //return {error: response};
-      return Promise.reject({ error: {code: response.status, message: response.statusText }});
+      return Promise.reject({
+        error: { code: response.status, message: response.statusText },
+      });
     }
     return response;
   }
 
-  getTasks() {
-    return fetch("http://localhost:8080/tasks", {
-      mode: "cors",
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-    })
-      .then((response) => TasksService.instance.handleErrors(response))
-      .catch((err) => {
-        return Promise.reject(err);
-      })
-      .then((res) => {
-        return res.json();
-      });
+  async getTasks() {
+    let response = await TasksService.instance.sendUrlData(TasksService.apiUrl);
+    return response;
   }
 
   async toggleDone({ id, done }) {
     let patchResponse = await TasksService.instance
-      .sendData(`http://localhost:8080/tasks/${id}`, { done }, "PATCH")
+      .sendBodyData(`${TasksService.apiUrl}/${id}`, { done }, "PATCH")
       .then((data) => {
         return data;
       });
 
     return patchResponse;
+  }
+
+  deleteTask({ id }) {
+    return TasksService.instance.sendUrlData(
+      `${TasksService.apiUrl}/${id}`,
+      "DELETE"
+    );
   }
 }
 

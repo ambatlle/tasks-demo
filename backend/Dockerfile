@@ -3,13 +3,13 @@ ENV APP_HOME=/root/dev/myapp/
 WORKDIR $APP_HOME
 COPY mvnw  $APP_HOME
 ADD .mvn/ $APP_HOME/.mvn
-COPY config.yml $APP_HOME
 COPY pom.xml $APP_HOME
-RUN ./mvnw dependency:resolve
+RUN chmod +x ./mvnw && \
+  ./mvnw dependency:resolve
 COPY . .
-RUN ./mvnw clean package
-RUN rm -f $APP_HOME/target/tasks-api-*sources*.jar
-RUN mv $APP_HOME/target/tasks-api-*.jar $APP_HOME/target/tasks-api-app.jar
+RUN ./mvnw clean package && \
+  rm -f $APP_HOME/target/tasks-api-*sources*.jar && \
+  mv $APP_HOME/target/tasks-api-*.jar $APP_HOME/target/tasks-api-app.jar
 
 FROM openjdk:11-jre-slim AS DB_CREATOR
 WORKDIR /root/tasks-app/

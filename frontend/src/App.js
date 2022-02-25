@@ -12,7 +12,7 @@ import useTasksList from './hooks/useTasksList';
 //todo: do some tests
 //todo: refactor cards in CardComponent if possible
 function App() {
-  const { tasks, addTask, toggleDone, isLoading, error } = useTasksList();
+  const { tasks, addTask, toggleDone, deleteTask, isLoading, error } = useTasksList();
 
   if (error) {
     throw new Error(error); //it should be catched by ErrorBoundary
@@ -25,7 +25,10 @@ function App() {
           <div className="container title">Tasker</div>
         </section>
         <AddTaskForm onTaskSave={task => addTask(task)} />
-        <TasksList list={tasks} onDoneChange={({ id, done }) => toggleDone({ id, done })} loading={isLoading} />
+        <TasksList list={tasks}
+          onDoneChange={({ id, done }) => toggleDone({ id, done })}
+          onDeleteTask={({ id }) => deleteTask({ id })}
+          loading={isLoading} />
       </main>
     </>
   );

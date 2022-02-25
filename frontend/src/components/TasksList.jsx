@@ -11,8 +11,12 @@ const TasksList = (props) => {
         <div className="card-header has-text-right">
           <h1 className="card-header-title">{numTasks} Tasks</h1>
         </div>
-        <div className="card-content" style={{maxHeight: "75vh", overflowY: "scroll"}}>
+        <div
+          className="card-content"
+          style={{ maxHeight: "75vh", overflowY: "scroll" }}
+        >
           {hasTasks ? (
+            
             props.list.map((task, index) => {
               return (
                 <Task
@@ -25,6 +29,9 @@ const TasksList = (props) => {
                   onDoneChange={(args) => {
                     props.onDoneChange({ id: args.id, done: args.done });
                   }}
+                  onDeleteTask={({ id }) => { 
+                    props.onDeleteTask({id: id});
+                  }}
                 />
               );
             })
@@ -33,7 +40,7 @@ const TasksList = (props) => {
           ) : (
             <div className="columns">
               <div className="column is-full">
-                <div className="loader is-loading is-size-1"/>
+                <div className="loader is-loading is-size-1" />
               </div>
             </div>
           )}

@@ -1,10 +1,10 @@
 import React from "react";
 import Moment from "moment";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalendar } from "@fortawesome/free-solid-svg-icons";
+import { faCalendar, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 
 //todo: done should'nt be kept as a state, if service crashes, could be an incosistence
-const Task = ({ id, description, date, done, onDoneChange }) => {
+const Task = ({ id, description, date, done, onDoneChange, onDeleteTask }) => {
   const [isDone, setDone] = React.useState(done);
 
   const handleChange = () => {
@@ -13,19 +13,29 @@ const Task = ({ id, description, date, done, onDoneChange }) => {
     onDoneChange({ id: id, done: newDone });
   };
 
-  React.useEffect(() => {
-  }, [isDone]);
+  const handleDelete = () => {
+    onDeleteTask({ id: id });
+  };
+
+  React.useEffect(() => {}, [isDone]);
 
   const convertDate = () => {
     return Moment(date).format("DD MMMM yyyy");
-  }
+  };
 
   return (
     <section className="container column">
       <div className="card">
         <div className="card-content">
           <span className="columns is-vcentered">
-            <span className="column">
+            <span className="column is-one">
+              <button className="button is-hovered" onClick={handleDelete}>
+                <span className="icon is-normal">
+                  <FontAwesomeIcon icon={faTrashCan} />
+                </span>
+              </button>
+            </span>
+            <span className="column is-11">
               <div className="has-text-left is-size-4">{description}</div>
               <div className="has-text-left is-size-7 has-text-grey">
                 <span className="mr-2">

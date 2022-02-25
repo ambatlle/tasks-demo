@@ -1,0 +1,28 @@
+version: '3.7'
+services:
+  tasks-demo-frontend:
+    tty: true
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    image: ambatlle/tasks-app-frontend:latest
+    networks:
+      tasks-demo-net:
+    ports:
+      - 3000:3000
+    depends_on:
+      - tasks-demo-backend
+
+  tasks-demo-backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    image: ambatlle/tasks-app-backend:latest
+    networks:
+      tasks-demo-net:
+    ports:
+      - 8080:8080
+      - 8081:8081
+
+networks:
+  tasks-demo-net:

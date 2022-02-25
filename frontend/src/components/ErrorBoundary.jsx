@@ -10,6 +10,10 @@ class ErrorBoundary extends React.Component {
     return { hasError: true };
   }
 
+  componentDidCatch(error, errorInfo) {
+    console.warn("There was an error", error, errorInfo);
+  }
+
   render() {
     if (this.state.hasError) {
       return (
@@ -22,6 +26,7 @@ class ErrorBoundary extends React.Component {
               <h2 className="has-text-danger is-italic has-text-weight-medium">
                 Kidding, about the 911, the error is very real and very irrecuperable.
               </h2>
+              <span><button onClick={() => window.location.reload(false)}>Retry</button></span>
             </div>
           </div>
         </div>

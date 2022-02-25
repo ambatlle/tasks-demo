@@ -78,7 +78,7 @@ const AddTaskForm = (props) => {
                     className="button is-dark"
                     type="submit"
                   >
-                    <span class="icon is-small">
+                    <span className="icon is-small">
                       <FontAwesomeIcon icon={faCheck} />
                     </span>
                     <span>Save</span>
