@@ -2,17 +2,18 @@ package cat.ambatlle.tasks.api;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.Objects;
+
+// TODO: 24/02/2022 doc class
+// TODO: 24/02/2022 map date as a real Date
 public class Task {
-    @JsonProperty
     private int id;
-    @JsonProperty
     private String description;
-    @JsonProperty
     private String date;
-    @JsonProperty
     private boolean done;
 
     public Task() {
+        //Jackson required
     }
 
     public Task(int id, String description, String date, boolean done) {
@@ -22,6 +23,25 @@ public class Task {
         this.done = done;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Task)) {
+            return false;
+        }
+        Task task = (Task) o;
+        return getId() == task.getId() && isDone() == task.isDone() && getDescription().equals(task.getDescription()) &&
+                getDate().equals(task.getDate());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getDescription(), getDate(), isDone());
+    }
+
+    @JsonProperty
     public int getId() {
         return id;
     }
@@ -30,6 +50,7 @@ public class Task {
         this.id = id;
     }
 
+    @JsonProperty
     public String getDescription() {
         return description;
     }
@@ -38,6 +59,7 @@ public class Task {
         this.description = description;
     }
 
+    @JsonProperty
     public String getDate() {
         return date;
     }
@@ -46,6 +68,7 @@ public class Task {
         this.date = date;
     }
 
+    @JsonProperty
     public boolean isDone() {
         return done;
     }

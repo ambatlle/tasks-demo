@@ -1,0 +1,15 @@
+insert into "task" (id, "description", "date", "done") values (1, 'Open-source radical access', '2022-02-09', true);
+insert into "task" (id, "description", "date", "done") values (2, 'Reverse-engineered upward-trending portal', '2022-02-15', true);
+insert into "task" (id, "description", "date", "done") values (3, 'Managed executive firmware', '2021-04-07', false);
+insert into "task" (id, "description", "date", "done") values (4, 'Open-source leading edge product', '2021-08-03', true);
+insert into "task" (id, "description", "date", "done") values (5, 'Object-based actuating secured line', '2022-01-19', false);
+insert into "task" (id, "description", "date", "done") values (6, 'Robust scalable encoding', '2021-07-19', true);
+insert into "task" (id, "description", "date", "done") values (7, 'Intuitive secondary neural-net', '2021-05-27', true);
+insert into "task" (id, "description", "date", "done") values (8, 'Fundamental 6th generation challenge', '2021-11-24', false);
+insert into "task" (id, "description", "date", "done") values (9, 'Expanded bandwidth-monitored workforce', '2021-09-15', false);
+insert into "task" (id, "description", "date", "done") values (10, 'Public-key impactful contingency', '2021-04-21', true);
+insert into "task" (id, "description", "date", "done") values (11, 'Triple-buffered secondary contingency', '2021-11-25', false);
+insert into "task" (id, "description", "date", "done") values (12, 'Future-proofed homogeneous architecture', '2021-07-19', true);
+insert into "task" (id, "description", "date", "done") values (13, 'Grass-roots bi-directional installation', '2021-04-11', false);
+insert into "task" (id, "description", "date", "done") values (14, 'Multi-channelled impactful groupware', '2021-04-05', false);
+insert into "task" (id, "description", "date", "done") values (15, 'Face to face encompassing migration', '2021-05-09', false);

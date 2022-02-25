@@ -2,15 +2,16 @@ import React from "react";
 import Task from "./Task";
 
 const TasksList = (props) => {
-  let hasTasks = props.list.length > 0;
+  let hasTasks = props.list && props.list.length > 0;
+  let numTasks = props.list ? props.list.length : 0;
 
   return (
     <section className="container column is-loading">
       <div className="card">
         <div className="card-header has-text-right">
-          <h1 className="card-header-title">Tasks</h1>
+          <h1 className="card-header-title">{numTasks} Tasks</h1>
         </div>
-        <div className="card-content">
+        <div className="card-content" style={{maxHeight: "75vh", overflowY: "scroll"}}>
           {hasTasks ? (
             props.list.map((task, index) => {
               return (

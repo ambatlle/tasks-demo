@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import useToggle from "../hooks/useToggle";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMinus } from "@fortawesome/free-solid-svg-icons";
+import { faMinus, faCheck } from "@fortawesome/free-solid-svg-icons";
 
 //todo: add error handling
 //todo: refactor toggler behaviour on a component
@@ -30,7 +30,7 @@ const AddTaskForm = (props) => {
         setError("");
         props.onTaskSave({ description, date });
       } else {
-        setError("All fields are required")
+        setError("All fields are required");
       }
     };
 
@@ -72,10 +72,16 @@ const AddTaskForm = (props) => {
               </div>
             </div>
             <div className="card-footer">
-              <div className="field">
+              <div className="field mt-1 mb-3 ml-5 mt-3 ">
                 <div className="control">
-                  <button className="button mt-1 mb-3 ml-5 mt-3 is-dark" type="submit">
-                    Save
+                  <button
+                    className="button is-dark"
+                    type="submit"
+                  >
+                    <span class="icon is-small">
+                      <FontAwesomeIcon icon={faCheck} />
+                    </span>
+                    <span>Save</span>
                   </button>
                 </div>
               </div>

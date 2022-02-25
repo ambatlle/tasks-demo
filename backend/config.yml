@@ -1,4 +1,30 @@
 logging:
-  level: INFO
+  level: DEBUG
   loggers:
     cat.ambatlle: DEBUG
+    com.h2database: TRACE
+    h2database: WARN
+    ru.vyarus: DEBUG
+    io.dropwizard: DEBUG
+
+database:
+  # the name of your JDBC driver
+  driverClass: org.h2.Driver
+  # the username
+  user: task
+  # the password
+  password: easy
+  # the JDBC URL
+  url: jdbc:h2:file:~/tasksApp/dbprod
+  # any properties specific to your JDBC driver:
+  properties:
+    charSet: UTF-8
+    #hibernate.dialect: org.hibernate.dialect.H2Dialect
+  # the maximum amount of time to wait on an empty pool before throwing an exception
+  maxWaitForConnection: 3s
+  # the SQL query to run when validating a connection's liveness
+  validationQuery: "/* MyApplication Health Check */ SELECT 1"
+  # the minimum number of connections to keep open
+  minSize: 8
+  # the maximum number of connections to keep open
+  maxSize: 30

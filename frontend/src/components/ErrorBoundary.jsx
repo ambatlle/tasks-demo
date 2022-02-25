@@ -7,19 +7,25 @@ class ErrorBoundary extends React.Component {
   }
 
   static getDerivedStateFromError(error) {
-    // Update state so the next render will show the fallback UI.
     return { hasError: true };
-  }
-
-  componentDidCatch(error, errorInfo) {
-    // You can also log the error to an error reporting service
-    console.warn("Errooooor", error, errorInfo);
   }
 
   render() {
     if (this.state.hasError) {
-      // You can render any custom fallback UI
-      return <h1 className="has-text-danger is-italic has-text-weight-medium">Something went wrong! Call the 911!</h1>;
+      return (
+        <div className="container pt-6 mt-6">
+          <div className="columns is-centered">
+            <div className="column is-half">
+              <h1 className="title has-text-danger is-italic has-text-weight-medium mb-0">
+                Something went wrong! Call the 911!
+              </h1>
+              <h2 className="has-text-danger is-italic has-text-weight-medium">
+                Kidding, about the 911, the error is very real and very irrecuperable.
+              </h2>
+            </div>
+          </div>
+        </div>
+      );
     }
 
     return this.props.children;

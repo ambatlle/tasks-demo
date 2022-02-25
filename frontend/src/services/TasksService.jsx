@@ -5,18 +5,18 @@ class TasksService {
 
   async sendData(url = "", data = {}, method = "POST") {
     const response = await fetch(url, {
-      method: method, 
-      mode: "cors", 
-      cache: "no-cache", 
+      method: method,
+      mode: "cors",
+      cache: "no-cache",
       headers: {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
-      redirect: "follow", 
-      referrerPolicy: "no-referrer", 
-      body: JSON.stringify(data), 
+      redirect: "follow",
+      referrerPolicy: "no-referrer",
+      body: JSON.stringify(data),
     });
-    return response.json(); 
+    return response.json();
   }
 
   async addNewTask(task) {
@@ -31,6 +31,14 @@ class TasksService {
     return postResponse;
   }
 
+  handleErrors(response) {
+    if (!response.ok) {
+      //return {error: response};
+      return Promise.reject({ error: {code: response.status, message: response.statusText }});
+    }
+    return response;
+  }
+
   getTasks() {
     return fetch("http://localhost:8080/tasks", {
       mode: "cors",
@@ -39,12 +47,19 @@ class TasksService {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
-    }).then((res) => res.json());
+    })
+      .then((response) => TasksService.instance.handleErrors(response))
+      .catch((err) => {
+        return Promise.reject(err);
+      })
+      .then((res) => {
+        return res.json();
+      });
   }
 
   async toggleDone({ id, done }) {
     let patchResponse = await TasksService.instance
-      .sendData(`http://localhost:8080/tasks/${id}`, {done}, "PATCH")
+      .sendData(`http://localhost:8080/tasks/${id}`, { done }, "PATCH")
       .then((data) => {
         return data;
       });
