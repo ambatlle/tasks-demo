@@ -35,7 +35,8 @@ Testing
 
 Docker containerisation
 ---
-
+docker build . -t ambatlle/tasks-app-backend
+docker run --name tasks-app-backend -p 8080:8080 -it ambatlle/tasks-app-backend
 
 Used tools
 ---

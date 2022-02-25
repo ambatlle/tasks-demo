@@ -68,3 +68,9 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+It has been developed using node's version 16.12.0
+
+## Docker
+
+- docker build . -t ambatlle/tasks-app-frontend
+- docker run --name tasks-app-frontend -p 3000:3000 -it ambatlle/tasks-app-frontend
