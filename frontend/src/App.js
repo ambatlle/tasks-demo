@@ -1,7 +1,7 @@
 import './App.css';
 
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import AddTaskForm from './components/AddTaskForm';
 import TasksList from './components/TasksList';
 import useTasksList from './hooks/useTasksList';
