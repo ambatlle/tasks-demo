@@ -75,7 +75,7 @@ public class TasksApplication extends Application<TasksConfiguration> {
 
     private void configureSwagger(Environment environment) {
         OpenAPI oas = new OpenAPI();
-        Info info = new Info()
+        Info info = new Info().version("0.0")
                 .title("Tasks API")
                 .description("RESTful Tasks API.")
                 .termsOfService("http://example.com/terms")

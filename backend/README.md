@@ -56,7 +56,7 @@ libraries and so on...
 - AssertJ
 - Mockito
 - JUnit
-- Postman??
+- Postman
 - IntelliJ IDEA EAP
 - Swagger
 - Jacoco testing coverage reporting
@@ -99,6 +99,9 @@ To view the reports use maven site goals for generation:
 
 Site reports will be running on http://localhost:8090/
 
+- Additionally, on the project's root path there is a very simple Postman collection to test the API (nothing really special)
+
+`./Tasks API v1.postman_collection.json`
 
 Pending TODOs
 ---

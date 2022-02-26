@@ -12,7 +12,7 @@ import java.util.Objects;
 // TODO: 24/02/2022 map date as a real Date
 public class Task {
     @NotNull(groups = {ValidationCreate.class, ValidationToggleDone.class})
-    @Min(value = 1, groups = {ValidationCreate.class, ValidationToggleDone.class})
+    @Min(value = 1, groups = {ValidationCreate.class})
     private int id;
     @NotNull(groups = ValidationCreate.class)
     private String description = "";
