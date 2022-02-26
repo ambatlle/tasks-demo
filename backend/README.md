@@ -44,13 +44,15 @@ Used tools
 libraries and so on...
 
 - Mockaroo https://www.mockaroo.com/
-- Spring Boot Maven wrapper (and Maven, of course)
+- Spring Boot Maven wrapper (and Maven)
 - Docker
 - Dropwizard
 - H2
-- Dropwizard-guicey
+- Dropwizard-guicey https://github.com/xvik/dropwizard-guicey
 - JDBI3
 - Guicey-jdbi3
+  - Integrates JDBI3 with guice. Based on dropwizard-jdbi3 integration.
+  - https://github.com/xvik/dropwizard-guicey-ext/tree/master/guicey-jdbi3
 - AssertJ
 - Mockito
 - JUnit

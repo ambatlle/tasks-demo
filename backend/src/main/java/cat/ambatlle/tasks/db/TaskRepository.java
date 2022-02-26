@@ -10,6 +10,8 @@ import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 import ru.vyarus.guicey.jdbi3.installer.repository.JdbiRepository;
 import ru.vyarus.guicey.jdbi3.tx.InTransaction;
 
+import java.util.List;
+
 @JdbiRepository
 @InTransaction
 public interface TaskRepository {
@@ -20,8 +22,9 @@ public interface TaskRepository {
     void insertTask(@BindBean Task task);
 
     @SqlQuery("SELECT * FROM \"task\" ORDER BY id DESC")
+    //@RegisterBeanMapper(TasksList.class)
     @RegisterBeanMapper(Task.class)
-    TasksList getAllTasks();
+    List<Task> getAllTasks();
 
     @SqlQuery("SELECT * FROM \"task\" WHERE id = :id")
     @RegisterBeanMapper(Task.class)

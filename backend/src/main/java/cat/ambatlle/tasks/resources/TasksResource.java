@@ -54,7 +54,7 @@ public class TasksResource {
                     content = @Content(schema = @Schema(anyOf = {TasksList.class})))})
     public TasksList getAllTasks() {
         LOGGER.debug("Getting all tasks");
-        return taskRepository.getAllTasks();
+        return new TasksList(taskRepository.getAllTasks());
     }
 
     @POST
