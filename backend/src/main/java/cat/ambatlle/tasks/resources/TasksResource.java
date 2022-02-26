@@ -1,17 +1,23 @@
 package cat.ambatlle.tasks.resources;
 
 import cat.ambatlle.tasks.api.Task;
+import cat.ambatlle.tasks.api.TasksList;
+import cat.ambatlle.tasks.core.ValidationCreate;
+import cat.ambatlle.tasks.core.ValidationToggleDone;
 import cat.ambatlle.tasks.db.TaskRepository;
+import io.dropwizard.validation.Validated;
 import org.jvnet.hk2.annotations.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.vyarus.guicey.jdbi3.tx.InTransaction;
 
 import javax.inject.Inject;
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.List;
 
 // TODO: 24/02/2022 add some error management
 // TODO: 24/02/2022 doc class
@@ -24,14 +30,19 @@ public class TasksResource {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TasksResource.class);
 
-    @Inject
+    //@Inject
     TaskRepository taskRepository;
+
+    @Inject
+    public TasksResource(TaskRepository taskRepository) {
+        this.taskRepository = taskRepository;
+    }
 
     @GET
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
     @InTransaction
-    public List<Task> getAllTasks() {
+    public TasksList getAllTasks() {
         LOGGER.debug("Getting all tasks");
         return taskRepository.getAllTasks();
     }
@@ -41,9 +52,9 @@ public class TasksResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @InTransaction
-    public Response createTask(Task newTask) {
+    public Response createTask(@NotNull @Valid @Validated({ValidationCreate.class}) Task newTask) {
         LOGGER.debug("Creating a new task");
-        taskRepository.insert(newTask);
+        taskRepository.insertTask(newTask);
         Task dbTask = taskRepository.findTaskById(newTask.getId());
         LOGGER.debug("Task with id {} created", dbTask.getId());
         return Response.status(Response.Status.CREATED).entity(dbTask).build();
@@ -54,7 +65,8 @@ public class TasksResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @InTransaction
-    public Response changeDoneStatus(@PathParam(value = "id") int id, Task task) {
+    public Response changeDoneStatus(@PathParam(value = "id") @Min(1) int id,
+                                     @NotNull @Valid @Validated({ValidationToggleDone.class}) Task task) {
         LOGGER.debug("Changing done status to task {} to {}", id, task.isDone());
         final int numRows = taskRepository.toggleDone(id, task.isDone());
         if (numRows > 0) {
@@ -72,7 +84,7 @@ public class TasksResource {
     public Response removeTask(@PathParam(value = "id") int id) {
         LOGGER.debug("Deleting task with id {}", id);
         int numRows = taskRepository.deleteTaskById(id);
-        if(numRows > 0) {
+        if (numRows > 0) {
             LOGGER.debug("Task with id {} deleted", id);
             return Response.status(Response.Status.NO_CONTENT).build();
         }

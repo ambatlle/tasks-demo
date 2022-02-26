@@ -1,15 +1,24 @@
 package cat.ambatlle.tasks.api;
 
+import cat.ambatlle.tasks.core.ValidationCreate;
+import cat.ambatlle.tasks.core.ValidationToggleDone;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 // TODO: 24/02/2022 doc class
 // TODO: 24/02/2022 map date as a real Date
 public class Task {
+    @NotNull(groups = {ValidationCreate.class, ValidationToggleDone.class})
+    @Min(value = 1, groups = {ValidationCreate.class, ValidationToggleDone.class})
     private int id;
-    private String description;
-    private String date;
+    @NotNull(groups = ValidationCreate.class)
+    private String description = "";
+    @NotNull(groups = ValidationCreate.class)
+    private String date = "";
+    @NotNull
     private boolean done;
 
     public Task() {
@@ -21,6 +30,12 @@ public class Task {
         this.description = description;
         this.date = date;
         this.done = done;
+    }
+
+    @Override
+    public String toString() {
+        return "Task{" + "id=" + id + ", description='" + description + '\'' + ", date='" + date + '\'' + ", done=" +
+                done + '}';
     }
 
     @Override
