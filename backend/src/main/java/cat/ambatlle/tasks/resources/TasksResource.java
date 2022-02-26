@@ -5,11 +5,14 @@ import cat.ambatlle.tasks.api.TasksList;
 import cat.ambatlle.tasks.core.ValidationCreate;
 import cat.ambatlle.tasks.core.ValidationToggleDone;
 import cat.ambatlle.tasks.db.TaskRepository;
+import com.codahale.metrics.annotation.Timed;
 import io.dropwizard.validation.Validated;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import io.swagger.v3.oas.annotations.tags.Tags;
 import org.jvnet.hk2.annotations.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,21 +49,27 @@ public class TasksResource {
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
     @InTransaction
-    @Operation(
-            description = "Get all the tasks",
-            responses = {@ApiResponse(responseCode = "200", description = "Tasks got successfully")}
-    )
+    @Operation(description = "Get all the tasks", responses = {
+            @ApiResponse(responseCode = "200", description = "Tasks got successfully",
+                    content = @Content(schema = @Schema(anyOf = {TasksList.class})))})
     public TasksList getAllTasks() {
         LOGGER.debug("Getting all tasks");
         return taskRepository.getAllTasks();
     }
 
     @POST
+    @Timed
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @InTransaction
-    public Response createTask(@NotNull @Valid @Validated({ValidationCreate.class}) Task newTask) {
+    @Operation(description = "Adds a new Task", responses = {
+            @ApiResponse(responseCode = "201", description = "Returns the successfully created task",
+                    content = @Content(schema = @Schema(anyOf = {Task.class})))})
+    public Response createTask(
+            @Parameter(description = "Task to create") @NotNull @Valid @Validated({ValidationCreate.class})
+            Task newTask) {
+
         LOGGER.debug("Creating a new task");
         taskRepository.insertTask(newTask);
         Task dbTask = taskRepository.findTaskById(newTask.getId());
@@ -69,12 +78,18 @@ public class TasksResource {
     }
 
     @PATCH
+    @Timed
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @InTransaction
-    public Response changeDoneStatus(@PathParam(value = "id") @Min(1) int id,
-                                     @NotNull @Valid @Validated({ValidationToggleDone.class}) Task task) {
+    @Operation(description = "Changes the task done status",
+            responses = {@ApiResponse(responseCode = "202", description = "Task done status changed"),
+                    @ApiResponse(responseCode = "404", description = "Task not found")})
+    public Response changeDoneStatus(
+            @Parameter(description = "Task identifier", example = "321") @NotNull @PathParam(value = "id")
+            @Min(1) int id, @Parameter(description = "Task", example = "{\"done\": \"false\"}") @NotNull @Valid
+            @Validated({ValidationToggleDone.class}) Task task) {
         LOGGER.debug("Changing done status to task {} to {}", id, task.isDone());
         final int numRows = taskRepository.toggleDone(id, task.isDone());
         if (numRows > 0) {
@@ -86,10 +101,15 @@ public class TasksResource {
     }
 
     @DELETE
+    @Timed
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @InTransaction
-    public Response removeTask(@PathParam(value = "id") int id) {
+    @Operation(description = "Delete a task",
+            responses = {@ApiResponse(responseCode = "204", description = "Task deleted successfully"),
+                    @ApiResponse(responseCode = "404", description = "Task not found")})
+    public Response removeTask(
+            @Parameter(description = "Task identifier", example = "321") @NotNull @PathParam(value = "id") int id) {
         LOGGER.debug("Deleting task with id {}", id);
         int numRows = taskRepository.deleteTaskById(id);
         if (numRows > 0) {
