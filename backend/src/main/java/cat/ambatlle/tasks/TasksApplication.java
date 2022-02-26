@@ -1,11 +1,17 @@
 package cat.ambatlle.tasks;
 
 import io.dropwizard.Application;
+import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.flyway.FlywayBundle;
 import io.dropwizard.jdbi3.bundles.JdbiExceptionsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import io.swagger.v3.jaxrs2.integration.resources.OpenApiResource;
+import io.swagger.v3.oas.integration.SwaggerConfiguration;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Contact;
+import io.swagger.v3.oas.models.info.Info;
 import org.eclipse.jetty.servlets.CrossOriginFilter;
 import ru.vyarus.dropwizard.guice.GuiceBundle;
 import ru.vyarus.guicey.jdbi3.JdbiBundle;
@@ -15,6 +21,8 @@ import javax.inject.Inject;
 import javax.servlet.DispatcherType;
 import javax.servlet.FilterRegistration;
 import java.util.EnumSet;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 // TODO: 24/02/2022 doc class
 // TODO: 24/02/2022 add logging
@@ -37,24 +45,50 @@ public class TasksApplication extends Application<TasksConfiguration> {
 
     @Override
     public void initialize(final Bootstrap<TasksConfiguration> bootstrap) {
+        // Guice Dependency Injection configuration
         bootstrap.addBundle(GuiceBundle.builder().enableAutoConfig(getClass().getPackage().getName())
                 .bundles(JdbiBundle.<TasksConfiguration>forDatabase((conf, env) -> conf.getDatabase()))
                 .printDiagnosticInfo().build());
 
+        // Conversion of SQLExceptions
         bootstrap.addBundle(new JdbiExceptionsBundle());
 
+        // Flyway to create the database
         bootstrap.addBundle(new FlywayBundle<>() {
             @Override
             public DataSourceFactory getDataSourceFactory(TasksConfiguration configuration) {
                 return configuration.getDatabase();
             }
         });
+
+        // Swagger-ui
+        bootstrap.addBundle(new AssetsBundle("/assets/swagger-ui/dist/", "/swagger-ui", "index.html"));
+
     }
 
     @Override
     public void run(final TasksConfiguration configuration, final Environment environment) {
         configureCors(environment);
         configureHealthChecks(configuration, environment);
+        configureSwagger(environment);
+    }
+
+    private void configureSwagger(Environment environment) {
+        OpenAPI oas = new OpenAPI();
+        Info info = new Info()
+                .title("Tasks API")
+                .description("RESTful Tasks API.")
+                .termsOfService("http://example.com/terms")
+                .contact(new Contact().email("jaumea@gmail.com"));
+
+        oas.info(info);
+        SwaggerConfiguration oasConfig = new SwaggerConfiguration()
+                .openAPI(oas)
+                .prettyPrint(true)
+                .resourcePackages(Stream.of("cat.ambatlle.tasks.resources")
+                        .collect(Collectors.toSet()));
+        environment.jersey().register(new OpenApiResource()
+                .openApiConfiguration(oasConfig));
         environment.jersey().register(new RepositoryInstaller());
     }
 

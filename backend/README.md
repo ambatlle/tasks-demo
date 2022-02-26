@@ -43,20 +43,69 @@ Used tools
 
 libraries and so on...
 
-- Mockaroo
+- Mockaroo https://www.mockaroo.com/
 - Spring Boot Maven wrapper (and Maven, of course)
 - Docker
-- dropwizard
+- Dropwizard
 - H2
-- dropwizard-guicey
-- guicey-jdbi3
+- Dropwizard-guicey
+- JDBI3
+- Guicey-jdbi3
 - AssertJ
+- Mockito
 - JUnit
-- Postman
+- Postman??
 - IntelliJ IDEA EAP
+- Swagger
+- Jacoco testing coverage reporting
+- Surefire testing results reporting
+
+OpenAPI v3 & Swagger
+--
+
+### Swagger ui
+
+Available on http://localhost:8080/swagger-ui/index.html
+
+It serves the swagger dist located on src/main/resources/assets/swagger-ui/dist
+
+Downloaded from https://github.com/swagger-api/swagger-ui/
+
+### OpenAPI v3
+
+http://localhost:8080/openapi.json
+
+### References
+
+- https://github.com/swagger-api/swagger-ui/releases/tag/v4.5.2
+- https://github.com/swagger-api/swagger-samples/tree/master/java/java-dropwizard
+- https://niftysoft.github.io/devlog/2018/05/03/open-api-v3.html
+- https://www.reonomy.com/blog/post/augmenting-dropwizard-with-swagger
+- https://spin.atomicobject.com/2014/10/11/serving-static-assets-with-dropwizard/
+
+Testing and reporting
+--
+
+It has been utilized JUnit 5, AspectJ and Mockito, for reporting tests and its coverage surefire and jacoco reports has
+been added to site.
+
+To view the reports use maven site goals for generation:
+
+./mvnw site site:run -p 8090
+
+- The port can be configured on pom property "site.port"
+
+Site reports will be running on http://localhost:8090/
+
 
 Pending TODOs
 ---
 
-- [ ] dfasdfa
-- [ ] dfadfasdfasfdsafs
+- [ ] Review all TODOs on code
+- [ ] Review all FIXME on code
+- [ ] Do more testing!
+- [ ] Document API for TaskResource
+- [ ] Add site reports to docker backend image
+  - [ ] Serve the site reports asset on app
+- [ ] aaaaaaa
+- 

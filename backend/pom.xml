@@ -17,15 +17,18 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <site.port>8090</site.port>
+
         <dropwizard.version>2.0.28</dropwizard.version>
         <h2.version>2.1.210</h2.version>
         <assertj.version>3.22.0</assertj.version>
         <guicey.version>5.4.2</guicey.version>
         <guicey-jdbi3.version>5.4.2-1</guicey-jdbi3.version>
+        <swagger.version>2.1.13</swagger.version>
+
         <mainClass>cat.ambatlle.tasks.TasksApplication</mainClass>
     </properties>
-
-
 
     <dependencyManagement>
         <dependencies>
@@ -57,45 +60,47 @@
             <artifactId>hibernate-validator</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>io.dropwizard</groupId>
-            <artifactId>dropwizard-testing</artifactId>
-            <version>${dropwizard.version}</version>
-            <scope>test</scope>
-        </dependency>
+        <!-- JDBI3 -->
         <dependency>
             <groupId>io.dropwizard</groupId>
             <artifactId>dropwizard-jdbi3</artifactId>
             <version>${dropwizard.version}</version>
         </dependency>
 
+        <!-- H2 Database -->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <version>${h2.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.assertj</groupId>
-            <artifactId>assertj-core</artifactId>
-            <version>${assertj.version}</version>
-        </dependency>
-
+        <!-- guice integration -->
         <dependency>
             <groupId>ru.vyarus</groupId>
             <artifactId>dropwizard-guicey</artifactId>
             <version>${guicey.version}</version>
         </dependency>
+
+        <!-- jdbi3 guice integration -->
         <dependency>
             <groupId>ru.vyarus.guicey</groupId>
             <artifactId>guicey-jdbi3</artifactId>
             <version>${guicey-jdbi3.version}</version>
         </dependency>
 
+        <!-- Flyway integration -->
         <dependency>
             <groupId>io.dropwizard.modules</groupId>
             <artifactId>dropwizard-flyway</artifactId>
             <version>2.0.28-1</version>
+        </dependency>
+
+        <!-- Testing -->
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>${assertj.version}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -108,6 +113,41 @@
             <version>2.0.2-beta</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>io.dropwizard</groupId>
+            <artifactId>dropwizard-testing</artifactId>
+            <version>${dropwizard.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Swagger/OpenAPI dependencies -->
+        <dependency>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-core</artifactId>
+            <version>${swagger.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-jaxrs2</artifactId>
+            <version>${swagger.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-integration</artifactId>
+            <version>${swagger.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-annotations</artifactId>
+            <version>${swagger.version}</version>
+        </dependency>
+
+        <!-- Assets bundle -->
+        <dependency>
+            <groupId>io.dropwizard</groupId>
+            <artifactId>dropwizard-assets</artifactId>
+            <version>${dropwizard.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -116,6 +156,9 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
                 <version>3.7.1</version>
+                <configuration>
+                    <port>${site.port}</port>
+                </configuration>
             </plugin>
             <plugin>
                 <artifactId>maven-shade-plugin</artifactId>
@@ -197,7 +240,7 @@
                     </execution>
                 </executions>
             </plugin>
-            <!-- Code Coverage report generation -->
+            <!-- Code Coverage report generation / Jacoco-->
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
@@ -224,6 +267,7 @@
                     </execution>
                 </executions>
             </plugin>
+
         </plugins>
     </build>
 
@@ -257,6 +301,7 @@
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>0.8.7</version>
             </plugin>
+
         </plugins>
     </reporting>
     <profiles>
