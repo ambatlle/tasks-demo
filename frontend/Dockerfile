@@ -5,8 +5,8 @@ ENV PATH /app/node_modules/.bin:$PATH
 ENV NODE_ENV=production
 COPY package.json ./
 COPY package-lock.json ./
-RUN npm install
+RUN npm --silent install
 RUN npm install -g serve
 COPY . ./
-RUN npm run build
+RUN npm --silent run build
 CMD ["serve", "-s", "build"]

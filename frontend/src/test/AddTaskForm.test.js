@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import AddTaskForm from './AddTaskForm';
+import AddTaskForm from '../components/AddTaskForm';
 import userEvent from "@testing-library/user-event";
 
 describe('AddTaskForm Component tests', () => {
