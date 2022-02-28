@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import Task from './Task';
+import Task from '../components/Task';
 import userEvent from "@testing-library/user-event";
 
 describe('Task Component tests', () => {

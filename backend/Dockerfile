@@ -24,3 +24,4 @@ COPY --from=BUILD_IMAGE /root/dev/myapp/target/tasks-api-app.jar .
 COPY --from=DB_CREATOR /root/tasksApp /root/tasksApp
 EXPOSE 8080
 CMD ["java","-jar","tasks-api-app.jar", "server", "config.yml"]
+

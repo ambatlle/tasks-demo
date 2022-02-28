@@ -44,8 +44,7 @@ const useTasksList = () => {
   }
 
   async function retrieveTasks() {
-    let aux = getTasks();
-    aux
+    getTasks()
       .then((json) => {
         setTasks(json);
         setLoading(false);

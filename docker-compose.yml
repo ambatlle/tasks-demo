@@ -9,7 +9,9 @@ services:
     networks:
       tasks-demo-net:
     ports:
-      - 3000:3000
+      - 80:3000
+    environment:
+      NODE_ENV: ${environment:-development} 
     depends_on:
       - tasks-demo-backend
 
