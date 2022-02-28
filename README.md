@@ -59,4 +59,4 @@ ssh -i ./docker-vm-key opc@129.153.199.232
 - [ ] document duckdns
 - [ ] document .env files
 - [ ] review why port not changes in production
-- [ ] update docker-compose cmd info with env file
+- [ ] update docker-compose cmd info with env file (--listen $PORT)
