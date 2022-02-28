@@ -35,7 +35,7 @@ const AddTaskForm = (props) => {
     };
 
     return (
-      <section className="container column">
+      <section className="container column" data-testid="addTaskForm">
         <div className="card">
           <form onSubmit={handleSubmit}>
             <div className="card-header">
@@ -46,6 +46,7 @@ const AddTaskForm = (props) => {
                 <label className="label">Description</label>
                 <div className="control">
                   <input
+                    data-testid="descriptionField"
                     className="input"
                     type="text"
                     name="description"
@@ -59,6 +60,7 @@ const AddTaskForm = (props) => {
                 <label className="label">Date</label>
                 <div className="control" style={{ maxWidth: "fit-content" }}>
                   <input
+                    data-testid="dateField"
                     className="input"
                     type="date"
                     name="date"
@@ -67,9 +69,11 @@ const AddTaskForm = (props) => {
                   />
                 </div>
               </div>
-              <div className="has-text-danger">
-                <i>{error}</i>
-              </div>
+              {error && (
+                <div className="has-text-danger">
+                  <i data-testid="requiredError">{error}</i>
+                </div>
+              )}
             </div>
             <div className="card-footer">
               <div className="field mt-1 mb-3 ml-5 mt-3 ">
@@ -77,6 +81,7 @@ const AddTaskForm = (props) => {
                   <button
                     className="button is-dark"
                     type="submit"
+                    data-testid="saveButton"
                   >
                     <span className="icon is-small">
                       <FontAwesomeIcon icon={faCheck} />
@@ -94,13 +99,17 @@ const AddTaskForm = (props) => {
 
   return (
     <>
-      <div className="container">
+      <div className="container" data-testid="addTaskFormWrapper">
         <div className="has-text-right">
-          <button className="button mr-3" onClick={toggleForm}>
+          <button
+            className="button mr-3"
+            onClick={toggleForm}
+            data-testid="newTaskButton"
+          >
             {!isFormOpen ? (
               "New task"
             ) : (
-              <span className="is-size-4">
+              <span className="is-size-4" data-testid="minusIcon">
                 <FontAwesomeIcon icon={faMinus} />
               </span>
             )}

@@ -1,8 +1,21 @@
-import { render, screen } from '@testing-library/react';
+import React from 'react';
 import App from './App';
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+import { render, screen } from '@testing-library/react';
+
+describe('App Component tests', () => {
+
+  it('renders without crashing', () => {
+    render(<App />);
+  });
+
+  it('contains add form & tasksList', () => {
+    render(<App />);
+
+    const form = screen.queryByTestId("addTaskFormWrapper");
+    expect(form).not.toBeNull();
+
+    const list = screen.queryByTestId("taskList");
+    expect(list).not.toBeNull();
+  });
 });

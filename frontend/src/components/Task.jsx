@@ -24,8 +24,8 @@ const Task = ({ id, description, date, done, onDoneChange, onDeleteTask }) => {
   };
 
   return (
-    <section className="container column">
-      <div className="card">
+    <section className="container column"  data-testid="task">
+      <div className="card" data-testid={`task-${id}`}>
         <div className="card-content">
           <span className="columns is-vcentered">
             <span className="column is-one">
