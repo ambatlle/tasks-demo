@@ -74,3 +74,12 @@ It has been developed using node's version 16.12.0
 
 - docker build . -t ambatlle/tasks-app-frontend
 - docker run --name tasks-app-frontend -p 3000:3000 -it ambatlle/tasks-app-frontend
+
+## Testing coverage
+
+execute `npx react-scripts test --coverage`
+
+## TODO
+
+- [ ] Do some more tests to increase coverage of App.js Component 
+- [ ] whatever else... to see

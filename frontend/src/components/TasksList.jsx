@@ -6,10 +6,10 @@ const TasksList = (props) => {
   let numTasks = props.list ? props.list.length : 0;
 
   return (
-    <section className="container column is-loading">
+    <section className="container column is-loading" data-testid="taskList">
       <div className="card">
         <div className="card-header has-text-right">
-          <h1 className="card-header-title">{numTasks} Tasks</h1>
+          <h1 className="card-header-title" data-testid="numTasks">{numTasks} Tasks</h1>
         </div>
         <div
           className="card-content"
@@ -36,7 +36,7 @@ const TasksList = (props) => {
               );
             })
           ) : !props.loading ? (
-            <i>Bravo! You have no pending tasks!</i>
+            <i data-testid="noTasksMessage">Bravo! You have no pending tasks!</i>
           ) : (
             <div className="columns">
               <div className="column is-full">

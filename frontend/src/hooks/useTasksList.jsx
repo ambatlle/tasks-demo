@@ -3,6 +3,11 @@ import TasksService from "../services/TasksService";
 
 //todo: use redux instead of states
 const useTasksList = () => {
+
+  const [isLoading, setLoading] = useState(true);
+  const [tasks, setTasks] = useState([]);
+  const [error, setError] = useState(undefined);
+
   async function getTasks() {
     setLoading(true);
     let t = await TasksService.getTasks();
@@ -38,12 +43,9 @@ const useTasksList = () => {
       });
   }
 
-  const [isLoading, setLoading] = useState(true);
-  const [tasks, setTasks] = useState([]);
-  const [error, setError] = useState(undefined);
-
-  useEffect(() => {
-    let aux = getTasks();
+  async function retrieveTasks() {
+    let aux = await getTasks();
+    console.log('retrieveTasks is called!!!!!!!!!!!!!!!!!!!');
     aux
       .then((json) => {
         setTasks(json);
@@ -53,9 +55,17 @@ const useTasksList = () => {
         setLoading(false);
         setError(err);
       });
-  }, []);
+  }
+
+  useEffect(() => {
+    console.log("use effect is called!", getTasks);
+    retrieveTasks();
+  }, []); //eslint-disable-line
 
   return { tasks, addTask, toggleDone, deleteTask, isLoading, error };
 };
 
 export default useTasksList;
+
+
+
