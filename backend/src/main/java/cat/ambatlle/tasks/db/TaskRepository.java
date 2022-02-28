@@ -1,6 +1,7 @@
 package cat.ambatlle.tasks.db;
 
 import cat.ambatlle.tasks.api.Task;
+import cat.ambatlle.tasks.api.TasksList;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.customizer.BindBean;
@@ -18,9 +19,10 @@ public interface TaskRepository {
 
     @SqlUpdate(
             "INSERT INTO \"task\" (id, \"description\", \"date\", \"done\") VALUES (:id, :description, :date, :done)")
-    void insert(@BindBean Task task);
+    void insertTask(@BindBean Task task);
 
     @SqlQuery("SELECT * FROM \"task\" ORDER BY id DESC")
+    //@RegisterBeanMapper(TasksList.class)
     @RegisterBeanMapper(Task.class)
     List<Task> getAllTasks();
 

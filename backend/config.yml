@@ -28,3 +28,4 @@ database:
   minSize: 8
   # the maximum number of connections to keep open
   maxSize: 30
+
