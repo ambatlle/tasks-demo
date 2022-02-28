@@ -7,7 +7,7 @@ COPY pom.xml $APP_HOME
 RUN chmod +x ./mvnw && \
   ./mvnw dependency:resolve
 COPY . .
-RUN chdmod +x ./mvnw && ./mvnw clean package && \
+RUN chmod +x ./mvnw && ./mvnw clean package && \
   rm -f $APP_HOME/target/tasks-api-*sources*.jar && \
   mv $APP_HOME/target/tasks-api-*.jar $APP_HOME/target/tasks-api-app.jar
 
