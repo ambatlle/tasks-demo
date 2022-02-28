@@ -77,9 +77,12 @@ It has been developed using node's version 16.12.0
 
 ## Testing coverage
 
-execute `npx react-scripts test --coverage`
+execute `npx react-scripts test --coverage` or `npm run coverage`
+
+it will create coverage reports on folder ./coverage
 
 ## TODO
 
-- [ ] Do some more tests to increase coverage of App.js Component 
+- [ ] Do some more tests to increase coverage of App.js Component
+- [ ] Document JSON server usage
 - [ ] whatever else... to see
