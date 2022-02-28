@@ -44,9 +44,7 @@ const useTasksList = () => {
   }
 
   async function retrieveTasks() {
-    let aux = await getTasks();
-    console.log('retrieveTasks is called!!!!!!!!!!!!!!!!!!!');
-    aux
+    getTasks()
       .then((json) => {
         setTasks(json);
         setLoading(false);
@@ -58,7 +56,6 @@ const useTasksList = () => {
   }
 
   useEffect(() => {
-    console.log("use effect is called!", getTasks);
     retrieveTasks();
   }, []); //eslint-disable-line
 

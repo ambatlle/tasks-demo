@@ -1,7 +1,9 @@
 //todo: error management
 //todo: ENV parameter for api host
 class TasksService {
-  static apiUrl = "http://localhost:8080/tasks";
+  static server = process.env.REACT_APP_API_SERVER || "localhost";
+  static port = process.env.REACT_APP_API_PORT || 8080;
+  static apiUrl = `http://${TasksService.server}:${TasksService.port}/tasks`;
   static instance = TasksService.instance || new TasksService();
 
   async sendBodyData(url = "", data = {}, method = "POST") {
