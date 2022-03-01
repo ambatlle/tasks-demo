@@ -11,6 +11,9 @@
       <plugin>
         <artifactId>maven-site-plugin</artifactId>
         <version>3.7.1</version>
+        <configuration>
+          <port>${site.port}</port>
+        </configuration>
       </plugin>
       <plugin>
         <artifactId>maven-shade-plugin</artifactId>
@@ -129,22 +132,6 @@
   </profiles>
   <dependencies>
     <dependency>
-      <groupId>io.dropwizard</groupId>
-      <artifactId>dropwizard-testing</artifactId>
-      <version>2.0.28</version>
-      <scope>test</scope>
-      <exclusions>
-        <exclusion>
-          <artifactId>jersey-test-framework-core</artifactId>
-          <groupId>org.glassfish.jersey.test-framework</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>jersey-test-framework-provider-inmemory</artifactId>
-          <groupId>org.glassfish.jersey.test-framework.providers</groupId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
       <groupId>org.assertj</groupId>
       <artifactId>assertj-core</artifactId>
       <version>3.22.0</version>
@@ -175,6 +162,22 @@
       <artifactId>mockito-all</artifactId>
       <version>2.0.2-beta</version>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.dropwizard</groupId>
+      <artifactId>dropwizard-testing</artifactId>
+      <version>2.0.28</version>
+      <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>jersey-test-framework-core</artifactId>
+          <groupId>org.glassfish.jersey.test-framework</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>jersey-test-framework-provider-inmemory</artifactId>
+          <groupId>org.glassfish.jersey.test-framework.providers</groupId>
+        </exclusion>
+      </exclusions>
     </dependency>
   </dependencies>
   <reporting>
@@ -223,6 +226,7 @@
     <mainClass>cat.ambatlle.tasks.TasksApplication</mainClass>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <assertj.version>3.22.0</assertj.version>
+    <site.port>8090</site.port>
     <h2.version>2.1.210</h2.version>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <swagger.version>2.1.13</swagger.version>

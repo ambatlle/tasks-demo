@@ -8,7 +8,6 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
-// TODO: 24/02/2022 doc class
 // TODO: 24/02/2022 map date as a real Date
 // TODO: 01/03/2022 use generated keys
 /**

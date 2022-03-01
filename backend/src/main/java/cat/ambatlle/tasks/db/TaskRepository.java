@@ -34,6 +34,7 @@ public interface TaskRepository {
      * @return all tasks on database.
      */
     @SqlQuery("SELECT * FROM \"task\" ORDER BY id DESC")
+    @RegisterBeanMapper(Task.class)
     List<Task> getAllTasks();
 
     /**

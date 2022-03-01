@@ -56,32 +56,6 @@ class TasksResourceTest {
     void tearDown() {
         Mockito.reset(TASK_REPOSITORY);
     }
-/*
-    @Test
-    void getPersonSuccess() {
-        when(TASK_REPOSITORY.findById(1L)).thenReturn(Optional.of(person));
-
-        Person found = EXT.target("/people/1").request().get(Person.class);
-
-        assertThat(found.getId()).isEqualTo(person.getId());
-        verify(DAO).findById(1L);
-    }
-
-    @Test
-    void getPersonNotFound() {
-        when(DAO.findById(2L)).thenReturn(Optional.empty());
-        final Response response = EXT.target("/people/2").request().get();
-
-        assertThat(response.getStatusInfo().getStatusCode()).isEqualTo(Response.Status.NOT_FOUND.getStatusCode());
-        verify(DAO).findById(2L);
-    }
-
-    @org.junit.jupiter.api.BeforeEach
-    void setUp() {
-    }
-
- */
-
 
     @Test
     @DisplayName("Getting all the tasks happy path")
