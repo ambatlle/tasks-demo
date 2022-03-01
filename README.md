@@ -16,7 +16,16 @@ access to [http://localhost] for frontend, backend is available on [http://local
 
 ## OCI
 
-ssh -i ./docker-vm-key opc@129.153.199.232
+### Admin SSH
+
+- ssh -i ./docker-vm-key opc@129.153.199.232
+
+### Install & run tasks-demo application
+
+1. sudo dnf install git
+2. git clone [https://github.com/ambatlle/tasks-demo.git] (ambatlle/"token")
+
+### Run app
 
 1. cd tasks-demo/
 2. sudo docker-compose up
@@ -25,20 +34,24 @@ ssh -i ./docker-vm-key opc@129.153.199.232
 
 - Note: all the interactions have been done with sudo permissions, it should be done rootless, but not time...
 
-### Docker
+### Docker installation
 
 1. sudo dnf install -y dnf-utils zip unzip
-2. sudo dnf config-manager --add-repo=https://download.docker.com/linux/centos/docker-ce.repo
+2. sudo dnf config-manager --add-repo=[https://download.docker.com/linux/centos/docker-ce.repo]
 3. sudo dnf remove -y runc
 4. sudo dnf install -y docker-ce --nobest
 5. sudo systemctl start docker
 6. sudo systemctl enable docker
 
 - Docker compose docker
-  1. curl -s https://api.github.com/repos/docker/compose/releases/latest|grep browser_download_url|grep docker-compose-linux-x86_64|cut -d '"' -f 4|wget -qi -
+  1. curl -s [https://api.github.com/repos/docker/compose/releases/latest] | grep browser_download_url | grep docker-compose-linux-x86_64|cut -d '"' -f 4 | wget -qi -
   2. sha256sum -c docker-compose-linux-x86_64.sha256
   3. chmod +x docker-compose-linux-x86_64
   4. sudo mv docker-compose-linux-x86_64 /usr/bin/docker-compose
+
+### Git installation
+
+Add some info
 
 ### References
 
@@ -47,12 +60,6 @@ ssh -i ./docker-vm-key opc@129.153.199.232
 - [https://www.youtube.com/watch?v=Fiu9BiNocJ4]
 - [https://techviewleo.com/install-docker-compose-on-oracle-linux/]
 
-### Install & run tasks-demo application
-
-1. sudo dnf install git
-2. git clone [https://github.com/ambatlle/tasks-demo.git] (ambatlle/"token")
-3. 
-
 ## TODO
 
 - [ ] add authentication in someway
@@ -60,3 +67,4 @@ ssh -i ./docker-vm-key opc@129.153.199.232
 - [ ] document .env files
 - [ ] review why port not changes in production
 - [ ] update docker-compose cmd info with env file (--listen $PORT)
+- [ ] add some info about dynamic DNS [https://www.duckdns.org/domains]
