@@ -1,8 +1,8 @@
 version: '3.7'
 services:
   tasks-demo-frontend:
-    #env_file: .env.local
-    env_file: .env.server
+    env_file: .env.local
+    #env_file: .env.server
     tty: true
     build:
       context: ./frontend
