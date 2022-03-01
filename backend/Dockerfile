@@ -1,8 +1,9 @@
 FROM openjdk:17-alpine AS BUILD_IMAGE
-ENV APP_HOME=/root/dev/myapp/
+ENV APP_HOME=/root/dev/myapp
 WORKDIR $APP_HOME
+COPY mvnw $APP_HOME
 COPY mvnw  $APP_HOME
-ADD .mvn/ $APP_HOME/.mvn
+COPY .mvn/ $APP_HOME/.mvn
 COPY pom.xml $APP_HOME
 RUN chmod +x ./mvnw && \
   ./mvnw dependency:resolve
@@ -24,4 +25,3 @@ COPY --from=BUILD_IMAGE /root/dev/myapp/target/tasks-api-app.jar .
 COPY --from=DB_CREATOR /root/tasksApp /root/tasksApp
 EXPOSE 8080
 CMD ["java","-jar","tasks-api-app.jar", "server", "config.yml"]
-

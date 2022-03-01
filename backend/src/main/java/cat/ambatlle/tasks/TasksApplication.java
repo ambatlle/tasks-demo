@@ -17,14 +17,15 @@ import ru.vyarus.dropwizard.guice.GuiceBundle;
 import ru.vyarus.guicey.jdbi3.JdbiBundle;
 import ru.vyarus.guicey.jdbi3.installer.repository.RepositoryInstaller;
 
-import javax.inject.Inject;
 import javax.servlet.DispatcherType;
 import javax.servlet.FilterRegistration;
 import java.util.EnumSet;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-// TODO: 24/02/2022 doc class
+/**
+ * Tasks Application main class. Runs and configures the application.
+ */
 // TODO: 24/02/2022 add logging
 public class TasksApplication extends Application<TasksConfiguration> {
 
@@ -43,6 +44,10 @@ public class TasksApplication extends Application<TasksConfiguration> {
         return "tasks";
     }
 
+    /**
+     * Initializes bundles for DI, Flyway and Swagger UI SPA
+     * @param bootstrap the application bootstrap
+     */
     @Override
     public void initialize(final Bootstrap<TasksConfiguration> bootstrap) {
         // Guice Dependency Injection configuration
@@ -66,6 +71,12 @@ public class TasksApplication extends Application<TasksConfiguration> {
 
     }
 
+    /**
+     * Runs the application.
+     *
+     * @param configuration the parsed {@link io.dropwizard.Configuration} object
+     * @param environment   the application's {@link Environment}
+     */
     @Override
     public void run(final TasksConfiguration configuration, final Environment environment) {
         configureCors(environment);
@@ -73,6 +84,11 @@ public class TasksApplication extends Application<TasksConfiguration> {
         configureSwagger(environment);
     }
 
+    /**
+     * Configure Swagger Integration.
+     *
+     * @param environment
+     */
     private void configureSwagger(Environment environment) {
         OpenAPI oas = new OpenAPI();
         Info info = new Info().version("0.0")
@@ -92,11 +108,21 @@ public class TasksApplication extends Application<TasksConfiguration> {
         environment.jersey().register(new RepositoryInstaller());
     }
 
-    @Inject
+    /**
+     * Configure all application health checks.
+     *
+     * @param configuration
+     * @param environment
+     */
     private void configureHealthChecks(final TasksConfiguration configuration, final Environment environment) {
         configuration.getHealthChecks().forEach((key, value) -> environment.healthChecks().register(key, value));
     }
 
+    // TODO: 01/03/2022 configure to allow only access from "official" frontend
+    /**
+     * Configures CORS to allow accessing API from anywhere
+     * @param environment
+     */
     private void configureCors(Environment environment) {
         final FilterRegistration.Dynamic cors = environment.servlets().addFilter("CORS", CrossOriginFilter.class);
         cors.setInitParameter(CrossOriginFilter.ALLOWED_ORIGINS_PARAM, "*");

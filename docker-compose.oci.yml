@@ -1,8 +1,9 @@
 version: '3.7'
 services:
   tasks-demo-frontend:
-    #env_file: .env.local
-    env_file: .env.server
+    environment: 
+      - REACT_APP_API_PORT=8080
+      - REACT_APP_API_SERVER=ambatlle-tasks.duckdns.org
     tty: true
     build:
       context: ./frontend
