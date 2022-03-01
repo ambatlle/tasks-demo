@@ -110,3 +110,4 @@ You can change the API server endpoints and backend/frontend ports modifing Dock
 - [ ] investigate how to use docker in rootless mode
 - [ ] create REACT_APP_PROTOCOL to be able to select https or https
   - [ ] By the way, configure https on OCI instance
+- [ ] Try to map node_modules and maven repository to docker volumes to make build images faster.
