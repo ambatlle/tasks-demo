@@ -23,7 +23,8 @@ ssh -i ./docker-vm-key opc@129.153.199.232
 3. curl [http://localhost:3000] should show the index html code if frontend is running properly
 4. curl [http://localhost:8080/sample] should answer with an "ok" if backend is running properly, also you can query the backend health with curl [http://localhost:8081/healthcheck]
 
-- Note: all the interactions have been done with sudo permissions, it should be done rootless, but not time...
+- Note: all the interactions have been done with sudo permissions, it should be done rootless, but not time... 
+  - If you want, use aliases, `alias docker="sudo docker"` and `alias docker-compose="sudo docker-compose"`to make easier.
 
 ### Docker
 
@@ -60,3 +61,4 @@ ssh -i ./docker-vm-key opc@129.153.199.232
 - [ ] document .env files
 - [ ] review why port not changes in production
 - [ ] update docker-compose cmd info with env file (--listen $PORT)
+- [ ] investgate how to use docker in rootless mode
