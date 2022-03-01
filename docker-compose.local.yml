@@ -1,0 +1,31 @@
+version: '3.7'
+services:
+  tasks-demo-frontend:
+    environment: 
+      - REACT_APP_API_PORT=8080
+      - REACT_APP_API_SERVER=localhost
+    tty: true
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    image: ambatlle/tasks-app-frontend:latest
+    networks:
+      tasks-demo-net:
+    ports:
+      - 80:3000
+    depends_on:
+      - tasks-demo-backend
+
+  tasks-demo-backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    image: ambatlle/tasks-app-backend:latest
+    networks:
+      tasks-demo-net:
+    ports:
+      - 8080:8080
+      - 8081:8081
+
+networks:
+  tasks-demo-net:

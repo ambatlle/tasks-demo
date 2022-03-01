@@ -12,8 +12,10 @@ import javax.validation.constraints.NotNull;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Tasks App Configuration
+ */
 // TODO: 24/02/2022 try to use a pooled DS
-// TODO: 25/02/2022 doc class
 public class TasksConfiguration extends Configuration {
     private static final String DATABASE_HEALTH = "database";
 
@@ -25,10 +27,19 @@ public class TasksConfiguration extends Configuration {
     @Inject
     private DatabaseHealthCheck databaseHealthCheck;
 
+    /**
+     * Gets the database DataSourceFactory based on configuration file.
+     *
+     * @return the application DataSourceFactory
+     */
     public DataSourceFactory getDatabase() {
         return database;
     }
 
+    /**
+     * Gets all the health checks to configure in the application startup
+     * @return all the health checks to configure
+     */
     public Map<String, HealthCheck> getHealthChecks() {
         Map<String, HealthCheck> healthChecks = new HashMap<>();
         healthChecks.put(DATABASE_HEALTH, this.databaseHealthCheck);

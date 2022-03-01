@@ -10,7 +10,14 @@ import java.util.Objects;
 
 // TODO: 24/02/2022 doc class
 // TODO: 24/02/2022 map date as a real Date
+// TODO: 01/03/2022 use generated keys
+/**
+ * Task model
+ */
 public class Task {
+    /**
+     * Used as primary key
+     */
     @NotNull(groups = {ValidationCreate.class, ValidationToggleDone.class})
     @Min(value = 1, groups = {ValidationCreate.class})
     private int id;

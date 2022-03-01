@@ -7,8 +7,10 @@ import com.google.inject.Singleton;
 import javax.inject.Inject;
 import javax.ws.rs.ext.Provider;
 
-//TODO: doc class
 //TODO: add logging
+/**
+ * Health check to verify if database is running and working fine.
+ */
 @Provider
 @Singleton
 public class DatabaseHealthCheck extends HealthCheck {

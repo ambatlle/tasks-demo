@@ -6,11 +6,6 @@ import AddTaskForm from './components/AddTaskForm';
 import TasksList from './components/TasksList';
 import useTasksList from './hooks/useTasksList';
 
-
-
-//todo: clean console ouputs
-//todo: do some tests
-//todo: refactor cards in CardComponent if possible
 function App() {
   const { tasks, addTask, toggleDone, deleteTask, isLoading, error } = useTasksList();
 
