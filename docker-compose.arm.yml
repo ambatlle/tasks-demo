@@ -3,7 +3,7 @@ services:
   tasks-demo-frontend:
     environment: 
       - REACT_APP_API_PORT=8080
-      - REACT_APP_API_SERVER=ambatlle-tasks.duckdns.org
+      - REACT_APP_API_SERVER=ambatlle-tasks-demo.duckdns.org
     tty: true
     build:
       context: ./frontend
@@ -13,6 +13,8 @@ services:
       tasks-demo-net:
     ports:
       - 80:3000
+    volumes:
+      - node_modules_frontend:/root/dev/myapp/node_modules
     depends_on:
       - tasks-demo-backend
 
@@ -26,6 +28,10 @@ services:
     ports:
       - 8080:8080
       - 8081:8081
+
+volumes:
+  #used to cache the node_modules to improve building time
+  node_modules_frontend:
 
 networks:
   tasks-demo-net:

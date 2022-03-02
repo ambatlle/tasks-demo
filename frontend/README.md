@@ -34,15 +34,17 @@
 
 ### Json Server
 
-To simplify development it has been added a [Json server](https://www.npmjs.com/package/json-server) for mocking purposes that can be run instead of running real API. You can run it using the added goal with `npm run server`.
+To simplify development the [Json server](https://www.npmjs.com/package/json-server) tool has been added for mocking purposes that can be run instead of running real API.
+
+You can run it using the added goal with `npm run server`
 
 ## Testing
 
-It has been created a few tests for the UI Components developed, they can be found on folder `./test`
+A few tests for the UI Components developed has been created, on folder `./test` you can find them.
 
 `npm run test` will execute the UI components test available on folder `./test`
 
-Additionally a goal to generate reports about coverage testing has been added execute you can run `npm run coverage` and look for the reports on folder `./coverage`
+Also a goal to generate coverage reporting has been added, it can be run with `npm run coverage`, it will the report on console, meanwhile it will also generate them on the folder `./coverage`
 
 ## Front end components by folder
 

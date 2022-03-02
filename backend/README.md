@@ -1,11 +1,17 @@
 # Tasker Backend
 
+In this project there will be the implementation for API REST used by the fronted, using Dropwizard as main development framework.
+
+## TOC
+
 - [Tasker Backend](#tasker-backend)
+  - [TOC](#toc)
   - [How to start the Tasks API application](#how-to-start-the-tasks-api-application)
   - [Persistence](#persistence)
     - [Flyway configuration](#flyway-configuration)
   - [Health Check](#health-check)
   - [Dependency Injection](#dependency-injection)
+  - [CORS](#cors)
   - [Resources](#resources)
   - [Model beans & validations](#model-beans--validations)
   - [Testing and reporting](#testing-and-reporting)
@@ -60,7 +66,13 @@ With Dropwizard guicey:
 
 This integration is regitered on [TasksApplication.initialize](./cat/../src/main/java/cat/ambatlle/tasks/TasksApplication.java).
 
-_**Note:** Due the backends simplicity and to avoid over-engineering it has not been used interfaces, favoring implementation over interface. Too get a lighter coupling, it could be done with implementations following the required interfaces._
+_**Note:** Due the backends simplicity and to avoid over-engineering no interfaces have been used, favoring implementation over interface. Too get a lighter coupling, it could be done with implementations following the required interfaces._
+
+## CORS
+
+To make it simplier the backend configures a CORS policy that allows access from everywhere. And improvement could be configure it to only allow connections from trusted origins.
+
+The CORS configuration can be seen at [TasksApplication.configureCors](./cat/../src/main/java/cat/ambatlle/tasks/TasksApplication.java) method.
 
 ## Resources
 
@@ -70,14 +82,14 @@ See [Swagger UI](#swagger-ui) for more detailed documentation about the Resource
 
 ## Model beans & validations
 
-- On package `cat.ambatlle.tasks.api` can be found the two beans used to model de Tasks data.
-- On package `cat.ambatlle.tasks.core` can be found the validation interfaces to define validation groups to apply to model beans and `TasksResource` endpoint's input parameters.
+- On package `cat.ambatlle.tasks.api` you can find the two beans used to model de Tasks data.
+- On package `cat.ambatlle.tasks.core` you can find the validation interfaces to define validation groups, they are used to be applied to model beans and `TasksResource` endpoint's input parameters.
 
 ## Testing and reporting
 
 To test the created resources it has been used JUnit, AspectJ, Mockito and Mockaroo (to generate some random data).
 
-They can be runned using `./mvnw test` goal.
+They can be run using `./mvnw test` goal.
 
 To report the testing results it has been used the Surefire reports plugin and for testing coverage the Jacoco reports plugin. They can be generated with Maven's site goals.
 

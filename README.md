@@ -1,11 +1,17 @@
-# HOW-TO Run Tasks App
+# Tasker
 
-- [HOW-TO Run Tasks App](#how-to-run-tasks-app)
+This application pretends to be a PoC to test some frameworks like Dropwizard and React, it will allow to keep a pending list of tasks to do, keeping track if they are already done or not.
+
+## TOC
+
+- [Tasker](#tasker)
+  - [TOC](#toc)
   - [OCI deployed Task App](#oci-deployed-task-app)
   - [Run Docker locally](#run-docker-locally)
   - [Run Docker on OCI](#run-docker-on-oci)
   - [Environment files for docker-compose](#environment-files-for-docker-compose)
     - [Ports and API server endpoints](#ports-and-api-server-endpoints)
+    - [Docker volumes](#docker-volumes)
   - [Installing dependencies required on OCI instance](#installing-dependencies-required-on-oci-instance)
     - [References](#references)
   - [More details on](#more-details-on)
@@ -13,23 +19,23 @@
 
 ## OCI deployed Task App
 
-At the time of writing this document the Task demo application was deployed on Oracle Cloud accessible through [Tasker](http://ambatlle-tasks.duckdns.org/) or by [IP](http://129.153.199.232/)
+At the time of writing this document the Task demo application was deployed on Oracle Cloud accessible through [Tasker](http://ambatlle-tasks-demo.duckdns.org/) or by [IP](http://129.153.215.36/)
 
 ## Run Docker locally
 
-1. `cat docker-compose.local.yml > docker-compose.yml`
+1. `cp docker-compose.local.yml docker-compose.yml`
 2. `docker-compose up -d`
 
 You can access to [http://localhost] for frontend and backend is available on [http://localhost:8080]
 
 - Docker compose is preferred, although you could build&run the containers manually instead:
-
+  
   1. `docker build -f ./backend/Dockerfile -t ambatlle/tasks-app-backend:latest`
   2. `docker run --name tasks-app-backend -p 8080:8080 -it ambatlle/tasks-app-backend:latest`
   3. `docker build -f ./frontend/Dockerfile -t ambatlle/tasks-app-frontend:latest`
   4. `docker run --name tasks-app-frontend -p 80:3000 -it ambatlle/tasks-app-frontend:latest`
 
-  - **Note:**- you must set manually the API server and port passing it by [environment variable](#environment-files-for-docker-compose), if not it will assume that API is at [http://localhost:8080](http://localhost:8080) by default, which by default should work fine.
+  - **Note:**- you might set manually the API server and port passing it by [environment variable](#environment-files-for-docker-compose), if not it will assume that API is at [http://localhost:8080](http://localhost:8080) by default, which by default should work fine.
 
 ## Run Docker on OCI
 
@@ -65,6 +71,12 @@ Frontend requires the following environment variables:
 ### Ports and API server endpoints
 
 You can change the API server endpoints and backend/frontend ports modifing Docker compose files, but OCI instance has only allowed access on the ports used by default during the development.
+
+### Docker volumes
+
+To reduce the time each time that frontend image needs to be built, a volume has ben created to keep the frontend node_modules dependencies. If for some reason changing frontend's node_module dependencies it doesn't seem to refresh correctly on docker container, you may try to delete the frontend's Docker volume to force its recreation.
+
+For more info you can look at [https://docs.docker.com/engine/reference/commandline/](https://docs.docker.com/engine/reference/commandline/docker/)
 
 ## Installing dependencies required on OCI instance
 
