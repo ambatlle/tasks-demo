@@ -36,7 +36,7 @@ You can access to [http://localhost] for frontend and backend is available on [h
 1. `ssh -i ./docker-vm-key opc@129.153.199.232` (*use your cloud's IP and your public key*)
 2. `git clone https://github.com/ambatlle/tasks-demo.git` *if not done yet*
 3. `cd tasks-demo/`
-4. `cat docker-compose.oci.yml > docker-compose.yml`
+4. `cat docker-compose.oci.yml > docker-compose.yml` *also there are a couple of docker configuration files to deploy backend on ARM architectures*
 5. `sudo docker-compose up -d` *it will build the images the first time, if you want to force rebuild use `--build` flag*
 6. `curl http://localhost` should show the index html code if frontend is running properly
 7. `curl http://localhost:8080/sample` should answer with an "ok" if backend is running properly, also you can query the backend health with `curl http://localhost:8081/healthcheck`
