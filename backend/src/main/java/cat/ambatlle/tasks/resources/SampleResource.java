@@ -10,7 +10,7 @@ import javax.ws.rs.core.Response;
 /**
  * Just a sample REST resource for testing purposes
  */
-@Path("/sample")
+@Path("/")
 @Produces("application/json")
 @Tag(name = "Sample")
 public class SampleResource {
@@ -20,7 +20,7 @@ public class SampleResource {
      * @return an "ok" response, with status 200
      */
     @GET
-    @Path("/")
+    @Path("/sample")
     public Response ask() {
         return Response.ok("ok").build();
     }

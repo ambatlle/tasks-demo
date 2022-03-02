@@ -34,7 +34,6 @@ import javax.ws.rs.core.Response;
  * Tasks resource API
  */
 @Path("/")
-@Service
 @Tag(name = "Tasks")
 public class TasksResource {
 

@@ -5,15 +5,16 @@
   - [Persistence](#persistence)
     - [Flyway configuration](#flyway-configuration)
   - [Health Check](#health-check)
+  - [Dependency Injection](#dependency-injection)
   - [Resources](#resources)
   - [Model beans & validations](#model-beans--validations)
   - [Testing and reporting](#testing-and-reporting)
   - [OpenAPI 3 & Swagger](#openapi-3--swagger)
     - [Swagger UI](#swagger-ui)
     - [OpenAPI 3](#openapi-3)
-    - [Used Tools](#used-tools)
-    - [References](#references)
-    - [TODO](#todo)
+  - [Used Tools](#used-tools)
+  - [References](#references)
+  - [TODO](#todo)
 
 ## How to start the Tasks API application
 
@@ -29,7 +30,7 @@
    - on Windows use `mvnw.cmd clean install`
    - on Linux/Mac use `mvnw clean install`
    - or you can use your preferred Java IDE with Maven integration
-   - seems that some times due windows/linux end of line conversion there can be some problems on this files, if it happens to you, the fastter way that you have is use a tool like `dos2unix`, oldy but effective.
+   - seems that some times due windows/linux end of line conversion there can be some problems on this files, if it happens to you, the fastter way that you have is use a tool like `dos2unix`, oldy but effective. Or you could fix it configuring [git EOL management](https://docs.github.com/en/get-started/getting-started-with-git/configuring-git-to-handle-line-endings) to use Linux style EOL.
 
 ## Persistence
 
@@ -47,9 +48,25 @@ To see your application's health enter url [http://localhost:8081/healthcheck](h
 
 Available on package [cat.ambatlle.tasks.health](./cat/../src/main/java/cat/ambatlle/tasks/health/DatabaseHealthCheck.java) and registered on [TasksApplication.configureHealthChecks](./cat/../src/main/java/cat/ambatlle/tasks/TasksApplication.java) method. To add more health checks, you can register them on [TasksConfiguration.getHealthChecks](./cat/../src/main/java/cat/ambatlle/tasks/TasksConfiguration.java) method.
 
+## Dependency Injection
+
+To manage dependencies between components of the application and avoid a thight coupling and to favor composition of components, it uses [Dropwizard guicey](#used-tools), which is a dropwizard integration of Google Guice.
+
+With Dropwizard guicey:
+
+- the application will inject the dependencies on the classes that need it, using the `@Inject` annotation on their dependencies.
+- automatically discovers and registers all the Resources that have the annotation `@Path`
+- also, will discover and register all the Repositories that have the annotation `@JdbiRepository`, automatically too.
+
+This integration is regitered on [TasksApplication.initialize](./cat/../src/main/java/cat/ambatlle/tasks/TasksApplication.java).
+
+_**Note:** Due the backends simplicity and to avoid over-engineering it has not been used interfaces, favoring implementation over interface. Too get a lighter coupling, it could be done with implementations following the required interfaces._
+
 ## Resources
 
-The Tasks API resource is available on [TasksResource](./src/main/java/cat/ambatlle/tasks/resources/TasksResource.java), it offers all the endpoints necessary by the frontend interacting with the injected [TaskRepository](./cat/../src/main/java/cat/ambatlle/tasks/db/TaskRepository.java). Look for [Swagger UI](#swagger-ui) for more detailed documentation.
+The Tasks API resource is available on [TasksResource](./src/main/java/cat/ambatlle/tasks/resources/TasksResource.java), it offers all the endpoints necessary by the frontend interacting with the injected [TaskRepository](./cat/../src/main/java/cat/ambatlle/tasks/db/TaskRepository.java).
+
+See [Swagger UI](#swagger-ui) for more detailed documentation about the Resource API and its endpoints.
 
 ## Model beans & validations
 
@@ -68,7 +85,7 @@ To view the reports use maven site goals for generation:
 
 `./mvnw site site:run`
 
-- The port can be configured on pom property "site.port"
+- The port can be configured on pom property `site.port`
 
 Site reports will be running on [http://localhost:8090/](http://localhost:8090/)
 
@@ -82,7 +99,7 @@ Additionally, on the backends's root folder there is a very simple Postman colle
 
 Available on [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
 
-It serves the swagger dist SPA located on src/main/resources/assets/swagger-ui/dist
+When the backend is running, it serves the swagger dist SPA located on src/main/resources/assets/swagger-ui/dist
 
 Downloaded from [https://github.com/swagger-api/swagger-ui/](https://github.com/swagger-api/swagger-ui/)
 
@@ -90,13 +107,13 @@ It's configured on [TasksApplication.initialize](./cat/../src/main/java/cat/amba
 
 ### OpenAPI 3
 
-OpenAPI 3 spec for Tasks Resources can be accessed on [http://localhost:8080/openapi.json](http://localhost:8080/openapi.json)
+OpenAPI 3 spec for Tasks Resources can be accessed on [http://localhost:8080/openapi.json](http://localhost:8080/openapi.json), or for yaml format on [http://localhost:8080/openapi.yaml](http://localhost:8080/openapi.yaml)
 
 The API has been documented with OpenAPI annotations, this info its shown in Swagger UI and added to the spec.
 
 It's configured and registered on [TasksApplication.configureSwagger](./cat/../src/main/java/cat/ambatlle/tasks/TasksApplication.java) method.
 
-### Used Tools
+## Used Tools
 
 - [Mockaroo](https://www.mockaroo.com/) to generate some mock data for frontend json-server & flyway
 - [Spring Boot Maven wrapper (and Maven)](https://start.spring.io/)
@@ -117,7 +134,7 @@ It's configured and registered on [TasksApplication.configureSwagger](./cat/../s
 - [Surefire testing results reporting](https://maven.apache.org/surefire/maven-surefire-report-plugin/index.html)
 - [Duckdns](https://www.duckdns.org/) DNS for OCI public IP
 
-### References
+## References
 
 - [Swagger UI](https://github.com/swagger-api/swagger-ui/releases/tag/v4.5.2)
 - [Swagger Dropwizard Samples](https://github.com/swagger-api/swagger-samples/tree/master/java/java-dropwizard)
@@ -125,7 +142,7 @@ It's configured and registered on [TasksApplication.configureSwagger](./cat/../s
 - [Augmenting Dropwizard with Swagger and Rollbar](https://www.reonomy.com/blog/post/augmenting-dropwizard-with-swagger)
 - [Serving Static Assets with DropWizard](https://spin.atomicobject.com/2014/10/11/serving-static-assets-with-dropwizard/)
 
-### TODO
+## TODO
 
 - [ ] **Important**: Add error handling on TasksResources?
 - [ ] Review all TODOs on code
