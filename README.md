@@ -30,17 +30,17 @@ You can access to [http://localhost] for frontend and backend is available on [h
   3. `docker build -f ./frontend/Dockerfile -t ambatlle/tasks-app-frontend:latest`
   4. `docker run --name tasks-app-frontend -p 80:3000 -it ambatlle/tasks-app-frontend:latest`
 
-  - ***Note:**- you must set manually the API server and port passing it by [environment variable](#environment-files-for-docker-compose), if not it will assume that API is at [http://localhost:8080] by default, which by default should work fine.
+  - **Note:**- you must set manually the API server and port passing it by [environment variable](#environment-files-for-docker-compose), if not it will assume that API is at [http://localhost:8080](http://localhost:8080) by default, which by default should work fine.
 
 ## Run Docker on OCI
 
 1. `ssh -i ./docker-vm-key opc@129.153.199.232` (*use your cloud's IP and your public key*)
 2. `git clone https://github.com/ambatlle/tasks-demo.git` *if not done yet*
 3. `cd tasks-demo/`
-4. `cat docker-compose.server.yml > docker-compose.yml`
-5. `sudo docker-compose up`
+4. `cat docker-compose.oci.yml > docker-compose.yml`
+5. `sudo docker-compose up -d` *it will build the images the first time, if you want to force rebuild use `--build` flag*
 6. `curl http://localhost` should show the index html code if frontend is running properly
-7. `curl http://localhost:8080/sample` should answer with an "ok" if backend is running properly, also you can query the backend health with curl `http://localhost:8081/healthcheck`
+7. `curl http://localhost:8080/sample` should answer with an "ok" if backend is running properly, also you can query the backend health with `curl http://localhost:8081/healthcheck`
 
 - ***Note:*** all the interactions have been done with sudo permissions, it should be done rootless (*pending TODO*)
   - If you want, you can use aliases, `alias docker="sudo docker"` and `alias docker-compose="sudo docker-compose"` to make it easier.
