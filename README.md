@@ -4,7 +4,6 @@
   - [OCI deployed Task App](#oci-deployed-task-app)
   - [Run Docker locally](#run-docker-locally)
   - [Run Docker on OCI](#run-docker-on-oci)
-    - [Docker installation](#docker-installation)
   - [Environment files for docker-compose](#environment-files-for-docker-compose)
     - [Ports and API server endpoints](#ports-and-api-server-endpoints)
   - [Installing dependencies required on OCI instance](#installing-dependencies-required-on-oci-instance)
@@ -45,17 +44,7 @@ You can access to [http://localhost] for frontend and backend is available on [h
 - ***Note:*** all the interactions have been done with sudo permissions, it should be done rootless (*pending TODO*)
   - If you want, you can use aliases, `alias docker="sudo docker"` and `alias docker-compose="sudo docker-compose"` to make it easier.
 - ***Note:*** the configuration of OCI instance Internet Gateway and allowed public ports its outside the aim of this documentation.
-
-### Docker installation
-
-1. `sudo dnf install -y dnf-utils zip unzip`
-2. `sudo dnf config-manager --add-repo=https://download.docker.com/linux/centos/docker-ce.repo`
-3. `sudo dnf remove -y runc`
-4. `sudo dnf install -y docker-ce --nobest`
-5. `sudo systemctl start docker`
-6. `sudo systemctl enable docker`
-
-- Docker compose is preferred, although you could build&run the containers manually instead:
+- ***Note:*** Docker compose is preferred, although you could build&run the containers manually instead:
 
   1. `docker build -f ./backend/Dockerfile -t ambatlle/tasks-app-backend:latest`
   2. `docker run --name tasks-app-backend -p 8080:8080 -it ambatlle/tasks-app-backend:latest`
@@ -86,10 +75,10 @@ You can change the API server endpoints and backend/frontend ports modifing Dock
 5. `sudo systemctl start docker`
 6. `sudo systemctl enable docker`
 7. Docker compose docker
-   1. `curl -s https://api.github.com/repos/docker/compose/releases/latest | grep browser_download_url | grep docker-compose-linux-x86_64 | cut -d '"' -f 4 | wget -qi -`
-   2. `sha256sum -c docker-compose-linux-x86_64.sha256` if not valid don't continue! Look for why it's not a valid file.
-   3. `chmod +x docker-compose-linux-x86_64`
-   4. `sudo mv docker-compose-linux-x86_64 /usr/bin/docker-compose`
+   1. `curl -s https://api.github.com/repos/docker/compose/releases/latest | grep browser_download_url | grep docker-compose-linux-$(uname -i) | cut -d '"' -f 4 | wget -qi -`
+   2. `sha256sum -c docker-compose-linux-$(uname -i).sha256` if not valid don't continue! Look for why it's not a valid file.
+   3. `chmod +x docker-compose-linux-$(uname -i)`
+   4. `sudo mv docker-compose-linux-$(uname -i) /usr/bin/docker-compose`
 8. `sudo dnf install git`
 
 ### References
