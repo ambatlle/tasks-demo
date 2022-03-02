@@ -2,9 +2,15 @@ FROM openjdk:17-alpine AS BUILD_IMAGE
 ENV APP_HOME=/root/dev/myapp
 WORKDIR $APP_HOME
 COPY mvnw $APP_HOME
+# to avoid error https://github.com/moby/moby/issues/37965 on OCI Linux 
+# use a RUN true between followed COPYs
+RUN true 
 COPY mvnw  $APP_HOME
+RUN true
 COPY .mvn/ $APP_HOME/.mvn
+RUN true
 COPY pom.xml $APP_HOME
+RUN true 
 RUN chmod +x ./mvnw && \
   ./mvnw dependency:resolve
 COPY . .
