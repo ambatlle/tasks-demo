@@ -1,6 +1,6 @@
 # Tasker Backend
 
-In this project there will be the implementation for API REST used by the fronted, using Dropwizard as main development framework.
+In this project there will be the implementation for API REST used by the frontend, using Dropwizard as main development framework.
 
 ## TOC
 
@@ -162,4 +162,3 @@ It's configured and registered on [TasksApplication.configureSwagger](./cat/../s
 - [ ] Do more testing!
 - [ ] Add site reports to docker backend image?
   - [ ] Serve the site reports asset on app?
-- [ ] **javadoc classes**
